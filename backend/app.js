@@ -5,7 +5,7 @@ const app = express();
 
 const PORT = 7000;
 
-//connecting Database
+//connecting Database with server
 mongoose
   .connect(
     "mongodb+srv://admin007:admin@321@cluster0.kcgo7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
@@ -13,7 +13,8 @@ mongoose
   .then(PORT, () => {
     console.log("Server is running at port: " + PORT);
   })
-  .then((e) => console.log("MongoDB coneected"));
+  .then((e) => console.log("MongoDB coneected"))
+  .catch((err) => console.log(err));
 
 app.get("/", (req, res) => {
   console.log("Hello from server");
