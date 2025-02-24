@@ -1,4 +1,4 @@
-import User from "../Models/User.js";
+import User from "../Models/user-model.js";
 import bcrypt from "bcrypt";
 
 //get all users info
@@ -6,12 +6,10 @@ export const getAllUsers = async (req, res, next) => {
   let users;
   try {
     users = await User.find();
-    console.log(users);
   } catch (err) {
     console.log(err);
   }
 
-  //check if user already exists
   if (!users) {
     return res.status(404).json({ message: "No users found" });
   }

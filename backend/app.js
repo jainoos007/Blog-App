@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-import router from "./Routes/User.js";
+import userRrouter from "./Routes/user-routes.js";
+import blogRouter from "./Routes/blog-routes.js";
 
 const app = express();
 
@@ -9,7 +10,11 @@ const PORT = 7000;
 //middlewares
 app.use(express.json());
 
-app.use("/api/user", router); //http://localhost:7000/api/user....
+//user routes
+app.use("/api/user", userRrouter); //http://localhost:7000/api/user....
+
+//blog routes
+app.use("/api/blog", blogRouter); //http://localhost:7000/api/blog....
 
 //mongodb connection
 mongoose
