@@ -1,21 +1,23 @@
 import express from "express";
 import mongoose from "mongoose";
+import router from "./Routes/User.js";
 
 const app = express();
 
 const PORT = 7000;
 
-//connecting Database with server
-mongoose
-  .connect(
-    "mongodb+srv://admin007:admin@321@cluster0.kcgo7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
-  )
-  .then(PORT, () => {
-    console.log("Server is running at port: " + PORT);
-  })
-  .then((e) => console.log("MongoDB coneected"))
-  .catch((err) => console.log(err));
+//middlewares
+app.use(express.json());
 
-app.get("/", (req, res) => {
-  console.log("Hello from server");
+app.use("/api/user", router); //http://localhost:7000/api/user....
+
+//mongodb connection
+mongoose
+  .connect("mongodb://localhost:27017/blog")
+  .then((e) => console.log("MongoDB connected successfully"))
+  .catch((err) => console.log("error connecting to MongoDB: " + err));
+
+//server connection
+app.listen(PORT, () => {
+  console.log(`Server is running on http://localhost:${PORT}`);
 });
