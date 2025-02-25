@@ -33,3 +33,25 @@ export const addBlog = async (req, res) => {
     return res.status(404).json({ message: "internal server error" });
   }
 };
+
+//update blog by id
+export const updateBlog = async (req, res) => {
+  const { id } = req.params; // get blog post id from the URL
+  const { title, description, image, author } = req.body;
+
+  try {
+    const updatedBlog = await Blog.findByIdAndUpdate(
+      id,
+      { title, description, image, author },
+      { new: true }
+    ); // update the blog post
+    if (!updatedBlog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+
+    res.status(200).json({ message: "Blog updated successfully" });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
