@@ -19,7 +19,7 @@ const userSchema = new mongoose.Schema(
     blogs: [
       {
         type: mongoose.Types.ObjectId,
-        ref: "Blog",
+        ref: "Blog", //refering the blog model
         required: true,
       },
     ],
