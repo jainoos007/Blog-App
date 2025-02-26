@@ -49,7 +49,7 @@ export const signup = async (req, res) => {
     res.status(200).json({ message: "User created successfully" });
   } catch (err) {
     console.log("Error creating user", err);
-    return res.status(404).json({ message: "internal server error" });
+    return res.status(404).json({ message: "Internal server error" });
   }
 };
 
