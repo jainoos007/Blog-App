@@ -1,6 +1,6 @@
 import Blog from "../Models/blog-model.js";
 
-//get all the blog posts
+//get all the blog posts || api/blog/
 export const getAllBlogs = async (req, res) => {
   let blogs;
   try {
@@ -14,7 +14,7 @@ export const getAllBlogs = async (req, res) => {
   return res.json({ blogs });
 };
 
-//create a blog post
+//create a blog post || api/blog/create
 export const addBlog = async (req, res) => {
   try {
     const { title, description, image, author } = req.body;
@@ -34,7 +34,7 @@ export const addBlog = async (req, res) => {
   }
 };
 
-//update blog by id
+//update blog by id || api/blog/update/:id
 export const updateBlog = async (req, res) => {
   const { id } = req.params; // get blog post id from the URL
   const { title, description, image, author } = req.body;
@@ -56,7 +56,8 @@ export const updateBlog = async (req, res) => {
   }
 };
 
-//get blog by id
+//get blog by id || api/blog/:id
+
 const getBlogById = async (req, res) => {
   const { id } = req.params;
   try {
@@ -71,7 +72,7 @@ const getBlogById = async (req, res) => {
   }
 };
 
-//delete blog by id
+//delete blog by id || api/blog/delete/:id
 export const deleteBlog = async (req, res) => {
   const { id } = req.params;
 
