@@ -1,8 +1,9 @@
 import React from "react";
+import Navigation from "./components/Navigation";
 function App() {
   return (
     <>
-      <div>hello</div>
+      <Navigation />
     </>
   );
 }
