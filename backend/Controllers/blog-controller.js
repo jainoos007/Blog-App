@@ -106,3 +106,19 @@ export const deleteBlog = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+export const getBlogsByUserId = async (req, res) => {
+  const { id } = req.params;
+
+  let userBlogs;
+  try {
+    userBlogs = await User.findById(id).populate("blogs");
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+  if (!userBlogs) {
+    return res.status(404).json({ message: "No blogs found for this user" });
+  }
+  return res.status(200).json({ blogs: userBlogs });
+};
