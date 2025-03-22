@@ -1,4 +1,6 @@
+import mongoose from "mongoose";
 import Blog from "../Models/blog-model.js";
+import User from "../Models/user-model.js";
 
 //get all the blog posts || api/blog/
 export const getAllBlogs = async (req, res) => {
@@ -16,22 +18,35 @@ export const getAllBlogs = async (req, res) => {
 
 //create a blog post || api/blog/create
 export const addBlog = async (req, res) => {
+  const { title, description, image, author } = req.body;
+
+  let existingUser;
   try {
-    const { title, description, image, author } = req.body;
-
-    const newBlog = new Blog({ title, description, image, author });
-
-    try {
-      await newBlog.save();
-    } catch (err) {
-      console.log("Error saving blog to database", err);
-      return res.status(500).json({ message: "Internal server error" });
+    existingUser = await User.findById(author);
+    if (!existingUser) {
+      return res
+        .status(404)
+        .json({ message: "Unable to find user by this id" });
     }
-    return res.status(200).json({ message: "Created blog post successfully" });
   } catch (err) {
-    console.log("Error creating blog", err);
-    return res.status(404).json({ message: "internal server error" });
+    console.error(err);
+    return res.status(500).json({ error: err.message });
   }
+
+  const newBlog = new Blog({ title, description, image, author });
+
+  try {
+    const session = await mongoose.startSession();
+    session.startTransaction();
+    await newBlog.save({ session });
+    existingUser.blogs.push(newBlog);
+    await existingUser.save({ session });
+    await session.commitTransaction();
+  } catch (err) {
+    console.log("Error saving blog to database", err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+  return res.status(200).json({ message: "Created blog post successfully" });
 };
 
 //update blog by id || api/blog/update/:id
