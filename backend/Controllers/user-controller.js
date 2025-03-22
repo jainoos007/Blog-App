@@ -1,7 +1,7 @@
 import User from "../Models/user-model.js";
 import bcrypt from "bcrypt";
 
-//get all users info
+//get all users info || api/user
 export const getAllUsers = async (req, res, next) => {
   let users;
   try {
@@ -16,7 +16,7 @@ export const getAllUsers = async (req, res, next) => {
   return res.status(200).json({ users });
 };
 
-//create a new user
+//create a new user || api/user/signup
 export const signup = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -53,7 +53,7 @@ export const signup = async (req, res) => {
   }
 };
 
-//login an existing user
+//login an existing user || api/user/login
 export const login = async (req, res) => {
   try {
     const { email, password } = req.body;
