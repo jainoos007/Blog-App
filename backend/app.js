@@ -9,6 +9,7 @@ const PORT = 7000;
 
 //middlewares
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 //user routes
 app.use("/api/user", userRrouter); //http://localhost:7000/api/user....

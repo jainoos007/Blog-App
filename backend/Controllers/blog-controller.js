@@ -56,6 +56,21 @@ export const updateBlog = async (req, res) => {
   }
 };
 
+//get blog by id
+const getBlogById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const blog = await Blog.finfById(id);
+    if (!blog) {
+      return res.status(404).json({ message: "Blog not found" });
+    }
+    return res.json({ blog });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
+
 //delete blog by id
 export const deleteBlog = async (req, res) => {
   const { id } = req.params;
