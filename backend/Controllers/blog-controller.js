@@ -107,6 +107,7 @@ export const deleteBlog = async (req, res) => {
   }
 };
 
+//get blogs by user id || api/blog/user/:id
 export const getBlogsByUserId = async (req, res) => {
   const { id } = req.params;
 
