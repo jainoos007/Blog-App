@@ -72,11 +72,10 @@ export const updateBlog = async (req, res) => {
 };
 
 //get blog by id || api/blog/:id
-
-const getBlogById = async (req, res) => {
+export const getBlogById = async (req, res) => {
   const { id } = req.params;
   try {
-    const blog = await Blog.finfById(id);
+    const blog = await Blog.findById(id);
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
@@ -91,10 +90,13 @@ const getBlogById = async (req, res) => {
 export const deleteBlog = async (req, res) => {
   const { id } = req.params;
 
+  let blog;
   try {
-    const deleteBlog = await Blog.findByIdAndDelete(id);
+    blog = await Blog.findByIdAndDelete(id).populate("author");
+    await blog.author.blogs.pull(blog);
+    await blog.author.save();
 
-    if (!deleteBlog) {
+    if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
 

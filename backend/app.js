@@ -19,7 +19,9 @@ app.use("/api/blog", blogRouter); //http://localhost:7000/api/blog....
 
 //mongodb connection
 mongoose
-  .connect("mongodb://localhost:27017/blog")
+  .connect(
+    "mongodb+srv://admin007:admin1234@cluster0.kcgo7.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+  )
   .then((e) => console.log("MongoDB connected successfully"))
   .catch((err) => console.log("error connecting to MongoDB: " + err));
 
