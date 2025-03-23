@@ -40,7 +40,7 @@ const Signup = () => {
         <span className="text-sm text-gray-500 text-center">
           Already have an account ?{" "}
           <a href="/#" className="text-[#7c0fb3] underline">
-            Signin
+            Login
           </a>
         </span>
       </form>
