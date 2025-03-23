@@ -1,9 +1,10 @@
-@import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;600&display=swap');
+@import "tailwindcss";
 
 @layer base {
   body {
     font-family: 'Inter', sans-serif;
+    background-color: #C1BFFF;
   }
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Playfair Display', serif;

@@ -3,7 +3,7 @@ import React from "react";
 const Hero = () => {
   return (
     <div
-      className="bg-cover h-screen"
+      className="bg-cover h-150"
       style={{
         backgroundImage:
           "url('https://images.unsplash.com/photo-1582769923195-c6e60dc1d8dc?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
@@ -16,17 +16,17 @@ const Hero = () => {
         </p>
 
         {/* Button */}
-        <div class="relative group">
-          <button class="relative inline-block p-px font-semibold leading-6 text-white bg-[#C1BFFF] shadow-2xl cursor-pointer rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95">
-            <span class="absolute inset-0 rounded-xl bg-gradient-to-r from-teal-400 via-blue-500 to-purple-500 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
+        <div className="relative group">
+          <button className="relative inline-block p-px font-semibold leading-6 text-white bg-[#C1BFFF] shadow-2xl cursor-pointer rounded-xl shadow-zinc-900 transition-transform duration-300 ease-in-out hover:scale-105 active:scale-95">
+            <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-teal-400 via-blue-500 to-purple-500 p-[2px] opacity-0 transition-opacity duration-500 group-hover:opacity-100"></span>
 
-            <span class="relative z-10 block px-6 py-3 rounded-xl bg-[#7c0fb3]">
-              <div class="relative z-10 flex items-center space-x-2">
-                <span class="transition-all text-[#C1BFFF] duration-500 group-hover:translate-x-1">
+            <span className="relative z-10 block px-6 py-3 rounded-xl bg-[#7c0fb3]">
+              <div className="relative z-10 flex items-center space-x-2">
+                <span className="transition-all text-[#C1BFFF] duration-500 group-hover:translate-x-1">
                   CREATE YOUR BLOG
                 </span>
                 <svg
-                  class="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
+                  className="w-6 h-6 transition-transform duration-500 group-hover:translate-x-1"
                   data-slot="icon"
                   aria-hidden="true"
                   fill="currentColor"
