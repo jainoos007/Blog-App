@@ -9,7 +9,7 @@ const Navigation = () => {
           className="primary font-semibold cursor-pointer hover:text-[#7c0fb3b7]
         "
         >
-          SIGN IN
+          SIGN UP
         </button>
       </div>
     </div>

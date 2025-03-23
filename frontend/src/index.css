@@ -16,14 +16,8 @@
   }
   .bg-primary {
     background-color: #C1BFFF;
-  }
-  .bg-secondary {
-    background-color: #FDFBD4;
-  }
+  } 
   .primary {
     color: #7c0fb3;
-  }
-  .secondary {
-    color: #BDB96A;
   }
 }
