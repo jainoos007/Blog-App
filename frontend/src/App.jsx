@@ -1,17 +1,17 @@
 import React from "react";
-import Navigation from "./components/Navigation";
-import Hero from "./components/Hero";
-import Signup from "./components/Signup";
-import Login from "./components/Login";
-import Blogs from "./components/Blogs";
-import Footer from "./components/Footer";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Navigation from "./components/common/Navigation";
+import Footer from "./components/common/Footer";
+import Home from "./pages/Home";
 function App() {
   return (
     <>
       <Navigation />
-      <Hero />
-      <Blogs />
-      {/* <Login /> */}
+      <Router>
+        <Routes>
+          <Route path="/" element={<Home />} />
+        </Routes>
+      </Router>
       <Footer />
     </>
   );
