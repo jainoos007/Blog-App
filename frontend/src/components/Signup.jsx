@@ -2,7 +2,7 @@ import React from "react";
 
 const Signup = () => {
   return (
-    <div className="container mt-20 w-100 bg-primary flex flex-col items-center py-10 gap-4 rounded-4xl">
+    <div className="container mt-20 w-100 bg-primary flex flex-col items-center py-10 gap-4 rounded-4xl shadow-2xl border-4 border-purple-500">
       <div className="primary text-3xl font-extrabold mb-4">Sign Up</div>
       <form action="" className="flex flex-col gap-4">
         <input
@@ -39,7 +39,7 @@ const Signup = () => {
         </div>
         <span className="text-sm text-gray-500 text-center">
           Already have an account ?{" "}
-          <a href="/#" className="text-[#7c0fb3] underline">
+          <a href="/login" className="text-[#7c0fb3] underline">
             Login
           </a>
         </span>

@@ -1,12 +1,12 @@
 import React from "react";
+import bgImage from "../assets/cat.jpg";
 
 const Hero = () => {
   return (
     <div
       className="bg-cover h-150"
       style={{
-        backgroundImage:
-          "url('https://images.unsplash.com/photo-1582769923195-c6e60dc1d8dc?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')",
+        backgroundImage: `url('${bgImage}')`,
       }}
     >
       <div className="container place-items-center flex flex-col gap-8 py-16">
