@@ -4,6 +4,7 @@ import Hero from "./components/Hero";
 import Signup from "./components/Signup";
 import Login from "./components/Login";
 import Blogs from "./components/Blogs";
+import Footer from "./components/Footer";
 function App() {
   return (
     <>
@@ -11,6 +12,7 @@ function App() {
       <Hero />
       <Blogs />
       {/* <Login /> */}
+      <Footer />
     </>
   );
 }
