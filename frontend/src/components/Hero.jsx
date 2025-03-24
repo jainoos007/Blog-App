@@ -10,7 +10,7 @@ const Hero = () => {
       }}
     >
       <div className="container place-items-center flex flex-col gap-8 py-16">
-        <h1 className="text-9xl text-[#C1BFFF]">Stay Curious</h1>
+        <h1 className="text-9xl text-[#C1BFFF] mt-16">Stay Curious</h1>
         <p className="text-xl text-[#C1BFFF]">
           Discover stories, thinking, and expertise from writers on any topic
         </p>

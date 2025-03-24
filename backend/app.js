@@ -2,6 +2,10 @@ import express from "express";
 import mongoose from "mongoose";
 import userRrouter from "./Routes/user-routes.js";
 import blogRouter from "./Routes/blog-routes.js";
+import dotenv from "dotenv";
+
+// Load environment variables
+dotenv.config();
 
 const app = express();
 

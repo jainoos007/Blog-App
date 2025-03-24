@@ -1,5 +1,11 @@
 import User from "../Models/user-model.js";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+//generate token
+const generateToken = (id, email) => {
+  return jwt.sign({ id, email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+};
 
 //get all users info || api/user
 export const getAllUsers = async (req, res, next) => {
@@ -46,7 +52,10 @@ export const signup = async (req, res) => {
       return res.status(500).json({ message: "Internal server error" });
     }
 
-    res.status(200).json({ message: "User created successfully" });
+    //generate token
+    const token = generateToken(newUser._id, newUser.email);
+
+    res.status(200).json({ message: "User created successfully", token });
   } catch (err) {
     console.log("Error creating user", err);
     return res.status(404).json({ message: "Internal server error" });
@@ -69,8 +78,10 @@ export const login = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid password" });
     }
+    //generate token
+    const token = generateToken(user._id, user.email);
 
-    res.status(200).json({ message: "Login successful", data: user });
+    res.status(200).json({ message: "Login successful", token });
   } catch (err) {
     console.log("Error checking user", err);
     return res.status(500).json({ message: "Internal server error" });
