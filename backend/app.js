@@ -3,13 +3,15 @@ import mongoose from "mongoose";
 import userRrouter from "./Routes/user-routes.js";
 import blogRouter from "./Routes/blog-routes.js";
 import dotenv from "dotenv";
+import cors from "cors";
 
 // Load environment variables
 dotenv.config();
 
 const app = express();
 
-const PORT = 7000;
+// Enable CORS
+app.use(cors());
 
 //middlewares
 app.use(express.json());
@@ -29,6 +31,7 @@ mongoose
   .then((e) => console.log("MongoDB connected successfully"))
   .catch((err) => console.log("error connecting to MongoDB: " + err));
 
+const PORT = 7000;
 //server connection
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
