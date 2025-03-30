@@ -15,6 +15,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
       minlength: 6,
+      select: false, //to hide the password from the response
     },
     blogs: [
       {

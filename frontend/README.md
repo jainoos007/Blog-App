@@ -1,1 +1,2 @@
-Todo: create api request to connect with the backend
+Todo: create dashboard for user with image upload and details update
+      create auth provider using redux

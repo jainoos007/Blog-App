@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "../service/api";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -21,24 +22,14 @@ const Signup = () => {
     setError("");
 
     try {
-      const response = await fetch("http://localhost:7000/api/user/signup", {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-        },
-        body: JSON.stringify(formData),
-      });
+      const response = await axios.post("/user/signup", formData);
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Signup failed");
-      }
+      console.log(response);
 
       alert("Signup successful");
       navigate("/login");
     } catch (err) {
-      setError(err.message);
+      setError(err.response?.data?.message || "Signup failed");
     }
   };
 
