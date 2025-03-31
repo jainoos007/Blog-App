@@ -8,11 +8,11 @@ const Navigation = () => {
           BlogNest
         </a>
         <a
-          href="/signup"
+          href="/login"
           className="primary font-semibold cursor-pointer hover:text-[#7c0fb3b7]
         "
         >
-          SIGN UP
+          Login
         </a>
       </div>
     </div>

@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../service/api";
+import { useDispatch, useSelector } from "react-redux";
+import { loginUser } from "../redux/features/authSlice";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const { isLoading, error } = useSelector((state) => state.auth);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -13,19 +16,11 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-
-    try {
-      const response = await axios.post("/user/login", formData);
-
-      //store JWT token in local storage
-      console.log(response.data);
-      localStorage.setItem("token", response.data.token);
-      alert("Login successful");
-      navigate("/");
-    } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
-    }
+    dispatch(loginUser(formData)).then((result) => {
+      if (result.meta.requestStatus === "fulfilled") {
+        navigate("/");
+      }
+    });
   };
 
   return (
@@ -64,7 +59,7 @@ const Login = () => {
             <span className="relative z-10 block px-6 py-3 rounded-4xl bg-[#7c0fb3] place-items-center">
               <div className="relative z-10 flex items-center space-x-2">
                 <span className="transition-all duration-500 group-hover:translate-x-1">
-                  Login
+                  {isLoading ? "Logging in..." : "Login"}
                 </span>
               </div>
             </span>
