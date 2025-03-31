@@ -12,9 +12,8 @@ import { verifyToken } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
 //apply authmiddleware to all routes
-router.use(verifyToken);
+//router.use(verifyToken);
 
-router.get("/", getAllBlogs);
 router.post("/create", addBlog);
 router.get("/:id", getBlogById);
 router.patch("/update/:id", updateBlog);

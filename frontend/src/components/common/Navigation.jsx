@@ -19,17 +19,45 @@ const Navigation = () => {
         <a href="/" className="font-bold text-3xl primary cursor-pointer">
           BlogNest
         </a>
+        <div>
+          <ul className="flex space-x-4">
+            <li>
+              <a
+                href="/"
+                className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
+              >
+                Home
+              </a>
+            </li>
+            <li>
+              <a
+                href="/blogs"
+                className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
+              >
+                Blogs
+              </a>
+            </li>
+            <li>
+              <a
+                href="/contact"
+                className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
+              >
+                About
+              </a>
+            </li>
+          </ul>
+        </div>
         {token ? (
           <button
             onClick={handleLogout}
-            className="primary font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
+            className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
           >
             Logout
           </button>
         ) : (
           <a
             href="/login"
-            className="primary font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
+            className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
           >
             Login
           </a>

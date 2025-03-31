@@ -2,7 +2,7 @@ import React from "react";
 
 const Blogs = () => {
   return (
-    <div className="container h-150 w-full">
+    <div className="container h-150 ">
       <div className="text-center mt-8 text-5xl font-bold primary">
         Recent Blogs
       </div>
