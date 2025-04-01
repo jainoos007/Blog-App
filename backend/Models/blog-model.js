@@ -12,10 +12,10 @@ const blogSchema = new mongoose.Schema(
     },
     image: {
       type: String,
-      required: true,
+      required: false,
     },
     author: {
-      type: mongoose.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User", //this is referencing User model
       required: true,
     },

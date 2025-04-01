@@ -10,7 +10,7 @@ const SingleBlog = () => {
   useEffect(() => {
     const fetchBlog = async () => {
       try {
-        const response = await axios.get(`/blog/${blogId}`);
+        const response = await axios.get(`/user/blog/${blogId}`);
         setBlog(response.data.blog);
         setLoading(false);
       } catch (err) {
