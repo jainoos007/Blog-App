@@ -10,7 +10,6 @@ const AllBlogs = () => {
       try {
         const response = await axios.get("/user/blogs");
         setBlogs(response.data.blogs);
-        console.log(response.data);
       } catch (err) {
         console.log("Error fetching blogs", err);
       }
@@ -42,12 +41,11 @@ const AllBlogs = () => {
                   />
                 </div>
                 <div className="p-6">
-                  <div className="flex items-center gap-0.5 ">
+                  <div className="flex justify-between gap-0.5 ">
                     <h5 className="block font-sans text-xl font-semibold leading-snug tracking-normal text-[#7c0fb3] antialiased">
                       {blog.title}
                     </h5>
                     <h6 className="text-xs text-slate-400">
-                      -
                       {new Date(blog.createdAt).toLocaleDateString("en-US", {
                         year: "numeric",
                         month: "long",

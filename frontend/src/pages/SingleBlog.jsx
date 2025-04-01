@@ -29,7 +29,7 @@ const SingleBlog = () => {
     <div className="container mx-auto p-6 min-h-screen">
       <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6">
         <img
-          src={blog.image || "https://via.placeholder.com/600"}
+          src={`http://localhost:7000/uploads/${blog.image}`}
           alt={blog.title}
           className="w-full h-64 object-cover rounded-lg"
         />
