@@ -1,9 +1,6 @@
 import mongoose from "mongoose";
 import Blog from "../Models/blog-model.js";
 import User from "../Models/user-model.js";
-import multer from "multer";
-
-const upload = multer({ dest: "/uploads" }); // configure file storage
 
 //get all the blog posts || api/blog/
 export const getAllBlogs = async (req, res) => {
@@ -21,7 +18,14 @@ export const getAllBlogs = async (req, res) => {
 
 //create a blog post || api/blog/create
 export const addBlog = async (req, res) => {
-  const { title, description, image, author } = req.body;
+  console.log(req.body);
+  const { title, description } = req.body;
+  const author = req.user._id; // get user id from the request context
+  const image = req.file ? req.file.filename : "";
+
+  if (!title || !description) {
+    return res.status(400).json({ message: "Title and content are required" });
+  }
 
   let existingUser;
   try {

@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 
 //generate token
 const generateToken = (id, email) => {
-  return jwt.sign({ id, email }, process.env.JWT_SECRET, { expiresIn: "1h" });
+  return jwt.sign({ id, email }, process.env.JWT_SECRET, { expiresIn: "12h" });
 };
 
 //get all users info || api/user

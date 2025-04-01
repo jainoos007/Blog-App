@@ -34,7 +34,7 @@ const CreateBlog = () => {
       });
 
       console.log("Blog created successfully", response.data);
-      navigate("/all-blogs"); // Redirect to All Blogs page
+      navigate("/blogs"); // Redirect to All Blogs page
     } catch (err) {
       console.error("Error creating blog", err);
     }
@@ -69,11 +69,10 @@ const CreateBlog = () => {
           accept="image/*"
           onChange={handleChange}
           className="p-3 border rounded"
-          required
         />
         <button
           type="submit"
-          className="bg-[#7c0fb3] text-white p-3 rounded font-bold hover:bg-purple-600"
+          className="bg-[#7c0fb3] text-white p-3 rounded font-bold hover:bg-purple-600 cursor-pointer"
         >
           Create Blog
         </button>

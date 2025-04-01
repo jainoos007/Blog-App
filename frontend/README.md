@@ -1,2 +1,1 @@
-Todo: create dashboard for user with image upload and details update
-      create auth provider using redux
+Todo: create new blog feature with upload image

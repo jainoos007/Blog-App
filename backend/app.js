@@ -14,6 +14,7 @@ const app = express();
 app.use(cors());
 
 //middlewares
+app.use("/uploads", express.static("uploads"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

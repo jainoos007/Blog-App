@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/features/authSlice";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const dispatch = useDispatch();
@@ -48,12 +48,20 @@ const Navigation = () => {
           </ul>
         </div>
         {token ? (
-          <button
-            onClick={handleLogout}
-            className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
-          >
-            Logout
-          </button>
+          <div className="flex gap-3">
+            <Link
+              to="/blog/create"
+              className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
+            >
+              Create Blog
+            </Link>
+            <button
+              onClick={handleLogout}
+              className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
+            >
+              Logout
+            </button>
+          </div>
         ) : (
           <a
             href="/login"
