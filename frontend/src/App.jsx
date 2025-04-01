@@ -6,6 +6,8 @@ import Signup from "./components/Signup";
 import Home from "./pages/Home";
 import AllBlogs from "./pages/AllBlogs";
 import SingleBlog from "./pages/SingleBlog";
+import CreateBlog from "./components/CreateBlog";
+import PrivateRoute from "./utils/PrivateRoute";
 
 function App() {
   return (
@@ -17,6 +19,11 @@ function App() {
           <Route path="/signup" element={<Signup />} />
           <Route path="/blogs" element={<AllBlogs />} />
           <Route path="/blog/:blogId" element={<SingleBlog />} />
+
+          {/* Protected route */}
+          <Route element={<PrivateRoute />}>
+            <Route path="/blog/create" element={<CreateBlog />} />
+          </Route>
         </Routes>
       </Layout>
     </Router>

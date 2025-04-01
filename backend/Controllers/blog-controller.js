@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
 import Blog from "../Models/blog-model.js";
 import User from "../Models/user-model.js";
+import multer from "multer";
+
+const upload = multer({ dest: "/uploads" }); // configure file storage
 
 //get all the blog posts || api/blog/
 export const getAllBlogs = async (req, res) => {
