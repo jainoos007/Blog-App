@@ -31,7 +31,7 @@ const AllBlogs = () => {
             blogs.map((blog) => (
               <div
                 key={blog._id}
-                className="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
+                className="relative flex w-80  flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
               >
                 <div className="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
                   <img
@@ -40,9 +40,9 @@ const AllBlogs = () => {
                     className="object-cover"
                   />
                 </div>
-                <div className="p-6">
-                  <div className="flex justify-between gap-0.5 ">
-                    <h5 className="block font-sans text-xl font-semibold leading-snug tracking-normal text-[#7c0fb3] antialiased">
+                <div className="p-6 flex flex-col flex-grow">
+                  <div className="flex justify-between ">
+                    <h5 className="block font-sans text-xl font-semibold leading-snug tracking-normal text-[#7c0fb3] antialiased blog-title">
                       {blog.title}
                     </h5>
                     <h6 className="text-xs text-slate-400">
@@ -53,7 +53,7 @@ const AllBlogs = () => {
                       })}
                     </h6>
                   </div>
-                  <p className="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
+                  <p className="block font-sans text-base font-light leading-relaxed text-inherit antialiased blog-description">
                     {blog.description}
                   </p>
                 </div>
