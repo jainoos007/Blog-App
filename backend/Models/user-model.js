@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Blog from "./blog-model.js";
 
 const userSchema = new mongoose.Schema(
   {
@@ -29,6 +30,19 @@ const userSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
+
+// Mongoose pre-hook to delete related blogs when a user is deleted
+userSchema.pre("findOneAndDelete", async function (next) {
+  try {
+    const user = await this.model.findOne(this.getFilter());
+    if (user) {
+      await Blog.deleteMany({ author: user._id }); //Delete all blogs creted by this user
+    }
+    next();
+  } catch (err) {
+    next(err);
+  }
+});
 
 export default mongoose.model("User", userSchema);
 //users

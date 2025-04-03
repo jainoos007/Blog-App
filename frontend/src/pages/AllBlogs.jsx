@@ -20,7 +20,7 @@ const AllBlogs = () => {
   return (
     <div className="container min-h-screen flex flex-col ">
       <div className="text-center mt-8 text-5xl font-bold primary">
-        All Blogs
+        All Blogs({blogs.length})
       </div>
       {/* blog cards*/}
       <div className="flex justify-center">
