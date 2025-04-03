@@ -1,1 +1,2 @@
-Todo: create profile page for user
+Todo: create delete button functionality for profile
+create My Blogs component

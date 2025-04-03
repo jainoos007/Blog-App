@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "../service/api";
-import { useParams } from "react-router-dom";
-import { updateUser } from "../redux/features/authSlice";
+import { useNavigate, useParams } from "react-router-dom";
+import { logout, updateUser } from "../redux/features/authSlice";
 
 const Dashboard = () => {
   const { userId } = useParams(); // Get the user ID from the URL
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   // Get user data from Redux store
@@ -177,9 +178,8 @@ const Dashboard = () => {
 
   // Handle logout
   const handleLogout = () => {
-    // Here you would typically clear auth tokens and redirect to login page
-    console.log("User logged out");
-    alert("You have been logged out.");
+    dispatch(logout());
+    navigate("/login");
   };
 
   return (
