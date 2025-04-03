@@ -1,1 +1,1 @@
-Todo: create new blog feature with upload image
+Todo: create profile page for user

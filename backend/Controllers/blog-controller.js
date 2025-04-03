@@ -18,7 +18,6 @@ export const getAllBlogs = async (req, res) => {
 
 //create a blog post || api/blog/create
 export const addBlog = async (req, res) => {
-  console.log(req.body);
   const { title, description } = req.body;
   const author = req.user._id; // get user id from the request context
   const image = req.file ? req.file.filename : "";

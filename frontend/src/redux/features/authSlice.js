@@ -7,6 +7,7 @@ export const loginUser = createAsyncThunk(
     try {
       const response = await axios.post("user/login", formData);
       localStorage.setItem("token", response.data.token); //store token
+      localStorage.setItem("user", JSON.stringify(response.data.user)); //store user
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || "Login failed");
@@ -14,10 +15,22 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const updateUser = createAsyncThunk(
+  "auth/updateUser",
+  async (updatedUser, { rejectWithValue }) => {
+    try {
+      localStorage.setItem("user", JSON.stringify(updatedUser)); //store updated user
+      return updatedUser;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || "Update failed");
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: "auth",
   initialState: {
-    user: null,
+    user: JSON.parse(localStorage.getItem("user")) || null,
     token: localStorage.getItem("token") || null,
     isLoading: false,
     error: null,
@@ -31,6 +44,7 @@ const authSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+      //Login user cases
       .addCase(loginUser.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -41,6 +55,20 @@ const authSlice = createSlice({
         state.token = action.payload.token;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+      //Update user cases
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.user = action.payload;
+        state.error = null;
+      })
+      .addCase(updateUser.rejected, (state, action) => {
         state.isLoading = false;
         state.error = action.payload;
       });

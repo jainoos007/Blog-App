@@ -8,6 +8,7 @@ import AllBlogs from "./pages/AllBlogs";
 import SingleBlog from "./pages/SingleBlog";
 import CreateBlog from "./components/CreateBlog";
 import PrivateRoute from "./utils/PrivateRoute";
+import Dashboard from "./components/Dashboard";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           {/* Protected route */}
           <Route element={<PrivateRoute />}>
             <Route path="/blog/create" element={<CreateBlog />} />
+            <Route path="/dashboard/:userId" element={<Dashboard />} />
           </Route>
         </Routes>
       </Layout>

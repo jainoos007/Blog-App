@@ -87,3 +87,35 @@ export const login = async (req, res) => {
     return res.status(500).json({ message: "Internal server error" });
   }
 };
+
+//updat user by ID || api/user/update/id
+export const updateUserById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const { name, email, password } = req.body;
+
+    let updateFiels = { name, email };
+
+    if (password) {
+      //hash the password
+      const hashedPasword = await bcrypt.hash(password, 10);
+      updateFiels.password = hashedPasword;
+    }
+
+    const updatedUser = await User.findByIdAndUpdate(id, updateFiels, {
+      new: true,
+    });
+    if (!updatedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    //generate token
+    const token = generateToken(updatedUser._id, updatedUser.email);
+    return res
+      .status(200)
+      .json({ message: "User updated successfully", token, user: updatedUser });
+  } catch (err) {
+    console.error(err);
+    return res.status(500).json({ message: "Internal server error" });
+  }
+};
