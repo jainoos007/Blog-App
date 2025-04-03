@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "../service/api";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { logout, updateUser } from "../redux/features/authSlice";
 
 const Dashboard = () => {
@@ -22,6 +22,10 @@ const Dashboard = () => {
     password: "",
   });
 
+  //state for my my blogs
+  const [myBlogs, setMyBlogs] = useState([]);
+
+  // Fetch user data on component mount
   useEffect(() => {
     if (user) {
       setUserData({
@@ -30,6 +34,19 @@ const Dashboard = () => {
         password: "",
       });
     }
+  }, [user]);
+
+  //Fetch all blogs by user
+  useEffect(() => {
+    const getMyBlogs = async () => {
+      try {
+        const response = await axios.get(`blog/user/${userId}`);
+        setMyBlogs(response.data.blogs.blogs);
+      } catch (err) {
+        console.error("Error fetching blogs", err);
+      }
+    };
+    getMyBlogs();
   }, [userId]);
 
   // Handle form input changes
@@ -168,9 +185,67 @@ const Dashboard = () => {
         );
       case "blogs":
         return (
-          <div className="p-6 bg-white rounded-lg shadow-md">
-            <h2 className="text-xl font-semibold mb-4">My Blogs</h2>
-            <p>Your blog posts will appear here.</p>
+          <div className="p-6 bg-slate-400 rounded-lg shadow-md">
+            <div className="text-center mt-8 text-5xl font-bold primary">
+              My Blogs({myBlogs.length})
+            </div>
+            {/* blog cards*/}
+            <div className="flex justify-center">
+              <div className="grid grid-cols-3 gap-20 mt-15 mb-15">
+                {/*single blog card */}
+
+                {myBlogs.length > 0 ? (
+                  myBlogs.map((blog) => (
+                    <div
+                      key={blog._id}
+                      className="relative flex w-80  flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md"
+                    >
+                      <div className="relative mx-4 -mt-6 h-40 overflow-hidden rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40 bg-gradient-to-r from-blue-500 to-blue-600">
+                        <img
+                          src={`http://localhost:7000/uploads/${blog.image}`} // Fallback image}
+                          alt={blog.title}
+                          className="object-cover"
+                        />
+                      </div>
+                      <div className="p-6 flex flex-col flex-grow">
+                        <div className="flex justify-between ">
+                          <h5 className="block font-sans text-xl font-semibold leading-snug tracking-normal text-[#7c0fb3] antialiased blog-title">
+                            {blog.title}
+                          </h5>
+                          <h6 className="text-xs text-slate-400">
+                            {new Date(blog.createdAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                              }
+                            )}
+                          </h6>
+                        </div>
+                        <p className="block font-sans text-base font-light leading-relaxed text-inherit antialiased blog-description">
+                          {blog.description}
+                        </p>
+                      </div>
+                      <div className="p-6 pt-0">
+                        <Link
+                          to={`/blog/${blog._id}`}
+                          data-ripple-light="true"
+                          type="button"
+                          className="select-none rounded-lg bg-[#7c0fb3] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-[#C1BFFF] shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-violet-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer"
+                        >
+                          Read Blog
+                        </Link>
+                      </div>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-center text-gray-500 col-span-3">
+                    No blogs found.
+                  </p>
+                )}
+              </div>
+            </div>
           </div>
         );
       default:
