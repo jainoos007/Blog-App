@@ -77,15 +77,17 @@ const Dashboard = () => {
   };
 
   // Handle account deletion
-  const handleDeleteProfile = () => {
-    if (
-      window.confirm(
-        "Are you sure you want to delete your profile? This action cannot be undone."
-      )
-    ) {
-      // Here you would typically make an API call to delete the account
-      console.log("Profile deleted");
-      alert("Profile deleted successfully!");
+  const handleDeleteProfile = async () => {
+    try {
+      const response = await axios.delete(`/user/delete/${userId}`);
+      if (response.status === 200) {
+        dispatch(logout());
+        navigate("/login");
+        alert("Account deleted successfully!");
+      }
+    } catch (err) {
+      console.error("Error deleting profile", err);
+      alert("Failed to delete profile!");
     }
   };
 
