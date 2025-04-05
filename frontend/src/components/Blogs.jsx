@@ -6,8 +6,8 @@ import BlogCard from "./common/BlogCard";
 const Blogs = () => {
   const [blogs, setBlogs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
+  const [page, setPage] = useState(1);
   const [totalBlogs, setTotalBlogs] = useState(0);
   const blogsPerPage = 6;
 

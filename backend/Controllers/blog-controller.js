@@ -5,12 +5,12 @@ import User from "../Models/user-model.js";
 //get all the blog posts || api/blog/
 export const getAllBlogs = async (req, res) => {
   try {
-    const page = parseInt(req.query.page) || 1;
-    const limit = parseInt(req.query.limit) || 6;
-    const skip = (page - 1) * limit;
-
     // Count total blogs for pagination info
     const total = await Blog.countDocuments();
+
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || total; // default to total if limit is not provided
+    const skip = (page - 1) * limit;
 
     // Find blogs with pagination and populate author
     const blogs = await Blog.find()
