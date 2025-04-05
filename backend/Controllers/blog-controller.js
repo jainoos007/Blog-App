@@ -58,19 +58,24 @@ export const addBlog = async (req, res) => {
 //update blog by id || api/blog/update/:id
 export const updateBlog = async (req, res) => {
   const { id } = req.params; // get blog post id from the URL
-  const { title, description, image, author } = req.body;
+  const { title, description } = req.body;
+  const image = req.file ? req.file.filename : null; // get image filename from the request
 
   try {
-    const updatedBlog = await Blog.findByIdAndUpdate(
-      id,
-      { title, description, image, author },
-      { new: true }
-    ); // update the blog post
-    if (!updatedBlog) {
+    const blog = await Blog.findById(id);
+
+    if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
 
-    res.status(200).json({ message: "Blog updated successfully" });
+    //update fieds if they are provided
+    if (title) blog.title = title;
+    if (description) blog.description = description;
+    if (image) blog.image = image; //update image filename
+
+    await blog.save(); //save the updated blog post
+
+    return res.status(200).json({ message: "Blog updated successfully", blog });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal server error" });

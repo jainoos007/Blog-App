@@ -227,7 +227,7 @@ const Dashboard = () => {
                           {blog.description}
                         </p>
                       </div>
-                      <div className="p-6 pt-0">
+                      <div className="p-6 pt-0 flex justify-between">
                         <Link
                           to={`/blog/${blog._id}`}
                           data-ripple-light="true"
@@ -235,6 +235,14 @@ const Dashboard = () => {
                           className="select-none rounded-lg bg-[#7c0fb3] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-[#C1BFFF] shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-violet-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer"
                         >
                           Read Blog
+                        </Link>
+                        <Link
+                          to={`/blog/update/${blog._id}`}
+                          data-ripple-light="true"
+                          type="button"
+                          className="select-none rounded-lg bg-[#7c0fb3] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-[#C1BFFF] shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-violet-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer"
+                        >
+                          Edit Blog
                         </Link>
                       </div>
                     </div>

@@ -70,6 +70,19 @@ const CreateBlog = () => {
           onChange={handleChange}
           className="p-3 border rounded"
         />
+        {/* Image Preview */}
+        {blogData.image && (
+          <img
+            src={
+              typeof blogData.image === "string"
+                ? blogData.image // Existing image URL
+                : URL.createObjectURL(blogData.image) // Preview new uploaded image
+            }
+            alt="Blog Preview"
+            className="w-40 h-40 object-cover mt-4 rounded-lg shadow-md"
+          />
+        )}
+
         <button
           type="submit"
           className="bg-[#7c0fb3] text-white p-3 rounded font-bold hover:bg-purple-600 cursor-pointer"
