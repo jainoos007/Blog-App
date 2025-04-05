@@ -4,16 +4,30 @@ import User from "../Models/user-model.js";
 
 //get all the blog posts || api/blog/
 export const getAllBlogs = async (req, res) => {
-  let blogs;
   try {
-    blogs = await Blog.find().populate("author", "name email"); // populate author field with user details
-  } catch (err) {
-    console.error(err);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 6;
+    const skip = (page - 1) * limit;
+
+    // Count total blogs for pagination info
+    const total = await Blog.countDocuments();
+
+    // Find blogs with pagination and populate author
+    const blogs = await Blog.find()
+      .populate("author", "name email") // populate author field with user details
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit);
+
+    res.status(200).json({
+      blogs,
+      total,
+      page,
+      pages: Math.ceil(total / limit),
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
-  if (!blogs) {
-    return res.status(404).json({ message: "No blog posts found" });
-  }
-  return res.json({ blogs });
 };
 
 //create a blog post || api/blog/create
@@ -86,7 +100,7 @@ export const updateBlog = async (req, res) => {
 export const getBlogById = async (req, res) => {
   const { id } = req.params;
   try {
-    const blog = await Blog.findById(id);
+    const blog = await Blog.findById(id).populate("author", "name email"); // populate author field with user details
     if (!blog) {
       return res.status(404).json({ message: "Blog not found" });
     }
