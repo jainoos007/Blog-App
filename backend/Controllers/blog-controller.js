@@ -6,7 +6,7 @@ import User from "../Models/user-model.js";
 export const getAllBlogs = async (req, res) => {
   let blogs;
   try {
-    blogs = await Blog.find();
+    blogs = await Blog.find().populate("author", "name email"); // populate author field with user details
   } catch (err) {
     console.error(err);
   }

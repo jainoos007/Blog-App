@@ -11,7 +11,7 @@ import { upload } from "../middleware/multer.js";
 const router = express.Router();
 
 //apply authmiddleware to all routes
-router.use(verifyToken);
+//router.use(verifyToken);
 
 router.post("/create", upload.single("image"), addBlog);
 router.put("/update/:id", upload.single("image"), updateBlog);
