@@ -1,21 +1,23 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { logout } from "../../redux/features/authSlice";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Navigation = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const token = useSelector((state) => state.auth.token); // check if user is logged in
+  const location = useLocation();
+  const token = useSelector((state) => state.auth.token);
   const user = useSelector((state) => state.auth.user);
 
   // State to control dropdown visibility
   const [showDropdown, setShowDropdown] = useState(false);
 
-  // Ref for dropdown to detect outside clicks
+  // Refs for dropdown to detect outside clicks and handle keyboard accessibility
   const dropdownRef = useRef(null);
+  const dropdownButtonRef = useRef(null);
 
-  //Close dropdown when clocking outside
+  // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -27,69 +29,97 @@ const Navigation = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
+  // Handle keyboard accessibility
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === "Escape" && showDropdown) {
+        setShowDropdown(false);
+      }
+    };
+
+    document.addEventListener("keydown", handleEscape);
+    return () => document.removeEventListener("keydown", handleEscape);
+  }, [showDropdown]);
+
   const handleLogout = () => {
     dispatch(logout());
-    setShowDropdown(!showDropdown);
+    setShowDropdown(false);
     navigate("/login");
   };
+
+  // Check if link is active
+  const isActive = (path) => {
+    if (path === "/" && location.pathname === "/") return true;
+    if (path !== "/" && location.pathname.startsWith(path)) return true;
+    return false;
+  };
+
+  // Link component with active state
+  const NavLink = ({ to, children }) => (
+    <Link
+      to={to}
+      className={`transition-all duration-200 ease-in-out font-semibold cursor-pointer border-b-2 py-1 ${
+        isActive(to)
+          ? "border-purple-700 text-purple-800"
+          : "border-transparent hover:text-purple-600 hover:border-purple-400"
+      }`}
+    >
+      {children}
+    </Link>
+  );
 
   return (
     <div className="bg-primary drop-shadow-md">
       <div className="container flex justify-between items-center py-4">
-        <a href="/" className="font-bold text-3xl primary cursor-pointer">
+        <Link
+          to="/"
+          className="font-bold text-3xl primary cursor-pointer transition-colors hover:text-purple-600"
+        >
           BlogNest
-        </a>
+        </Link>
         <div>
-          <ul className="flex space-x-4">
+          <ul className="flex space-x-6">
             <li>
-              <a
-                href="/"
-                className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
-              >
-                Home
-              </a>
+              <NavLink to="/">Home</NavLink>
             </li>
             <li>
-              <a
-                href="/blogs"
-                className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
-              >
-                Blogs
-              </a>
+              <NavLink to="/blogs">Blogs</NavLink>
             </li>
             <li>
-              <a
-                href="/contact"
-                className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
-              >
-                About
-              </a>
+              <NavLink to="/contact">About</NavLink>
             </li>
           </ul>
         </div>
         {token ? (
-          <div className="flex gap-3">
-            <Link
-              to="/blog/create"
-              className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
-            >
-              Create Blog
-            </Link>
+          <div className="flex gap-5 items-center">
+            <NavLink to="/blog/create">Create Blog</NavLink>
+
             {/* Profile dropdown */}
             <div className="relative" ref={dropdownRef}>
               <button
+                ref={dropdownButtonRef}
                 onClick={() => setShowDropdown(!showDropdown)}
-                className="flex items-center gap-1 primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    setShowDropdown(!showDropdown);
+                  }
+                }}
+                aria-haspopup="true"
+                aria-expanded={showDropdown}
+                aria-controls="user-dropdown"
+                className="flex items-center gap-1 primary transition-all duration-200 ease-in-out font-semibold cursor-pointer hover:text-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 rounded px-2 py-1"
               >
                 <span>{user?.name || "User"}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  className={`h-4 w-4 transition-transform ${
+                  className={`h-4 w-4 transition-transform duration-200 ${
                     showDropdown ? "rotate-180" : ""
                   }`}
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
+                  aria-hidden="true"
                 >
                   <path
                     strokeLinecap="round"
@@ -100,9 +130,15 @@ const Navigation = () => {
                 </svg>
               </button>
 
-              {/* Dropdown menu */}
+              {/* Dropdown menu with transition */}
               {showDropdown && (
-                <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                <div
+                  id="user-dropdown"
+                  className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                  role="menu"
+                  aria-orientation="vertical"
+                  aria-labelledby="user-menu-button"
+                >
                   <div className="py-1">
                     <div className="px-4 py-2 border-b">
                       <p className="text-sm font-medium text-gray-900">
@@ -113,15 +149,17 @@ const Navigation = () => {
                       </p>
                     </div>
                     <Link
-                      to={`/dashboard/${user._id}`}
-                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      to={`/dashboard/${user?._id || ""}`}
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#7c0fb3b7] focus:outline-none focus:bg-gray-100 focus:text-[#7c0fb3]"
                       onClick={() => setShowDropdown(false)}
+                      role="menuitem"
                     >
                       Dashboard
                     </Link>
                     <button
                       onClick={handleLogout}
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-[#7c0fb3b7] focus:outline-none focus:bg-gray-100 focus:text-[#7c0fb3]"
+                      role="menuitem"
                     >
                       Logout
                     </button>
@@ -131,12 +169,7 @@ const Navigation = () => {
             </div>
           </div>
         ) : (
-          <a
-            href="/login"
-            className="primary transition ease-in-out font-semibold cursor-pointer hover:text-[#7c0fb3b7]"
-          >
-            Login
-          </a>
+          <NavLink to="/login">Login</NavLink>
         )}
       </div>
     </div>
