@@ -1,2 +1,3 @@
-Todo: create delete button functionality for profile
-create My Blogs component
+Todo: create text editor for blog
+add comment feature
+profile pic for user
