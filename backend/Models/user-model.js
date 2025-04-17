@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema(
         required: true,
       },
     ],
+    image: {
+      type: String,
+      default: "default.jpg", //default image for the user
+    },
   },
   {
     timestamps: true,
