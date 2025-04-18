@@ -11,6 +11,8 @@ import PrivateRoute from "./utils/PrivateRoute";
 import Dashboard from "./components/Dashboard";
 import UpdateBlog from "./components/UpdateBlog";
 import About from "./components/About";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   return (
@@ -31,6 +33,18 @@ function App() {
             <Route path="/dashboard/:userId" element={<Dashboard />} />
           </Route>
         </Routes>
+        {/* Toast Notifications Container */}
+        <ToastContainer
+          position="top-right"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </Layout>
     </Router>
   );

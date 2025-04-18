@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "../service/api";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const CreateBlog = () => {
   const [blogData, setBlogData] = useState({
@@ -36,7 +37,7 @@ const CreateBlog = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      console.log("Blog created successfully", response.data);
+      toast.success("Blog created successfully!");
       navigate("/blogs");
     } catch (err) {
       console.error("Error creating blog", err);

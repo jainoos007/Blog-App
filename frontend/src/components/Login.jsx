@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../redux/features/authSlice";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -17,6 +18,7 @@ const Login = () => {
     e.preventDefault();
     dispatch(loginUser(formData)).then((result) => {
       if (result.meta.requestStatus === "fulfilled") {
+        toast.success("Login successful");
         navigate("/");
       }
     });

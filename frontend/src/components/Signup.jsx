@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "../service/api";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -26,7 +27,7 @@ const Signup = () => {
 
       console.log(response);
 
-      alert("Signup successful");
+      toast.success("Signup successful");
       navigate("/login");
     } catch (err) {
       setError(err.response?.data?.message || "Signup failed");

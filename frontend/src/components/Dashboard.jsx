@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "../service/api";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { logout, updateUser } from "../redux/features/authSlice";
+import { toast } from "react-toastify";
 
 const Dashboard = () => {
   const { userId } = useParams();
@@ -127,7 +128,7 @@ const Dashboard = () => {
       });
 
       if (response.status === 200) {
-        alert("Profile updated successfully!");
+        toast.success("Profile updated successfully!");
 
         setUserData({
           name: response.data.user.name,
@@ -143,7 +144,7 @@ const Dashboard = () => {
       }
     } catch (err) {
       console.error("Error updating profile", err);
-      alert("Failed to update profile!");
+      toast.error("Failed to update profile!");
     }
   };
 
@@ -159,11 +160,11 @@ const Dashboard = () => {
         if (response.status === 200) {
           dispatch(logout());
           navigate("/login");
-          alert("Account deleted successfully!");
+          toast.success("Profile deleted successfully!");
         }
       } catch (err) {
         console.error("Error deleting profile", err);
-        alert("Failed to delete profile!");
+        toast.error("Failed to delete profile!");
       }
     }
   };

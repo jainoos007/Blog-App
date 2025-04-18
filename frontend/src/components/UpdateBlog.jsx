@@ -1,6 +1,7 @@
 import axios from "../service/api";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const UpdateBlog = () => {
   const { blogId } = useParams();
@@ -61,7 +62,7 @@ const UpdateBlog = () => {
         headers: { "Content-Type": "multipart/form-data" },
       });
 
-      alert("Blog updated successfully");
+      toast.success("Blog updated successfully");
       navigate("/blogs"); // Redirect to All Blogs page
     } catch (err) {
       console.error("Error creating blog", err);
@@ -72,7 +73,7 @@ const UpdateBlog = () => {
   const handleDeleteBlog = async () => {
     try {
       await axios.delete(`/blog/delete/${blogId}`);
-      alert("Blog deleted successfully");
+      toast.success("Blog deleted successfully");
       navigate("/blogs"); // Redirect to All Blogs page
     } catch (err) {
       console.error("Error deleting blog", err);
