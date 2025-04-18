@@ -9,6 +9,7 @@ const Dashboard = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.user);
+  console.log(user);
 
   // State for active tab
   const [activeTab, setActiveTab] = useState("profile");
@@ -20,6 +21,10 @@ const Dashboard = () => {
     password: "",
   });
 
+  // State for profile picture
+  const [profilePic, setProfilePic] = useState(null);
+  const [profilePicPreview, setProfilePicPreview] = useState(null);
+
   // State for my blogs
   const [myBlogs, setMyBlogs] = useState([]);
 
@@ -29,6 +34,9 @@ const Dashboard = () => {
   // Ref for sidebar to detect outside clicks
   const sidebarRef = useRef(null);
 
+  // Ref for file input
+  const fileInputRef = useRef(null);
+
   // Fetch user data on component mount
   useEffect(() => {
     if (user) {
@@ -37,6 +45,11 @@ const Dashboard = () => {
         email: user.email,
         password: "",
       });
+
+      // Set profile picture preview if user has one
+      if (user.image) {
+        setProfilePicPreview(`http://localhost:7000/uploads/${user.image}`);
+      }
     }
   }, [user]);
 
@@ -74,20 +87,45 @@ const Dashboard = () => {
     });
   };
 
+  // Handle profile picture change
+  const handleProfilePicChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setProfilePic(file);
+      // Create a preview URL
+      const previewUrl = URL.createObjectURL(file);
+      setProfilePicPreview(previewUrl);
+    }
+  };
+
+  // Trigger file input click
+  const triggerFileInput = () => {
+    fileInputRef.current.click();
+  };
+
   // Handle form submission for profile update
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     try {
-      const updatedData = {
-        name: userData.name,
-        email: userData.email,
-      };
+      // Create FormData object for file upload
+      const formData = new FormData();
+      formData.append("name", userData.name);
+      formData.append("email", userData.email);
 
       if (userData.password.trim() !== "") {
-        updatedData.password = userData.password;
+        formData.append("password", userData.password);
       }
 
-      const response = await axios.put(`/user/update/${userId}`, updatedData);
+      if (profilePic) {
+        formData.append("image", profilePic);
+      }
+
+      const response = await axios.put(`/user/update/${userId}`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
       if (response.status === 200) {
         alert("Profile updated successfully!");
 
@@ -97,6 +135,10 @@ const Dashboard = () => {
           password: "",
         });
 
+        // Reset profile pic state
+        setProfilePic(null);
+
+        // Update user in Redux store
         dispatch(updateUser(response.data.user));
       }
     } catch (err) {
@@ -142,6 +184,61 @@ const Dashboard = () => {
               Profile Information
             </h2>
             <form onSubmit={handleUpdateProfile}>
+              {/* Profile Picture Section */}
+              <div className="mb-6 flex flex-col items-center">
+                <div className="relative mb-4">
+                  <div className="h-32 w-32 rounded-full overflow-hidden border-4 border-[#7c0fb3] shadow-md">
+                    {profilePicPreview ? (
+                      <img
+                        src={profilePicPreview}
+                        alt="Profile Preview"
+                        className="h-full w-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-full w-full bg-gray-200 flex items-center justify-center text-3xl font-bold text-[#7c0fb3]">
+                        {user?.name?.charAt(0)?.toUpperCase() || "U"}
+                      </div>
+                    )}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={triggerFileInput}
+                    className="absolute bottom-0 right-0 bg-[#7c0fb3] text-white p-2 rounded-full shadow-md hover:bg-[#7c0fb3b7] transition-colors duration-200"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      className="h-5 w-5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"
+                      />
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"
+                      />
+                    </svg>
+                  </button>
+                </div>
+                <input
+                  type="file"
+                  ref={fileInputRef}
+                  accept="image/*"
+                  onChange={handleProfilePicChange}
+                  className="hidden"
+                />
+                <p className="text-sm text-gray-500">
+                  Click on the camera icon to update your profile picture
+                </p>
+              </div>
+
               <div className="mb-4">
                 <label
                   className="block text-gray-700 text-sm font-bold mb-2"
@@ -329,8 +426,17 @@ const Dashboard = () => {
             <h1 className="text-[#7c0fb3] font-bold text-xl mb-6">Dashboard</h1>
             <div className="border-t border-gray-200 pt-4">
               <div className="flex items-center mb-6">
-                <div className="h-10 w-10 rounded-full bg-[#7c0fb3] flex items-center justify-center text-white font-bold">
-                  {user?.name?.charAt(0)?.toUpperCase() || "U"}
+                {/* Show profile picture in sidebar if available */}
+                <div className="h-10 w-10 rounded-full overflow-hidden bg-[#7c0fb3] flex items-center justify-center text-white font-bold">
+                  {user?.profilePic ? (
+                    <img
+                      src={`http://localhost:7000/uploads/${user.profilePic}`}
+                      alt="Profile"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    user?.name?.charAt(0)?.toUpperCase() || "U"
+                  )}
                 </div>
                 <div className="ml-3">
                   <p className="text-sm font-medium text-gray-700">

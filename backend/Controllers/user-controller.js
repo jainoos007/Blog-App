@@ -91,18 +91,22 @@ export const login = async (req, res) => {
 //updat user by ID || api/user/update/id
 export const updateUserById = async (req, res) => {
   const { id } = req.params;
-  try {
-    const { name, email, password } = req.body;
+  const { name, email, password } = req.body;
+  const image = req.file ? req.file.filename : null; // get image filename from the request
 
-    let updateFiels = { name, email };
+  try {
+    let updateFields = { name, email };
 
     if (password) {
       //hash the password
       const hashedPasword = await bcrypt.hash(password, 10);
-      updateFiels.password = hashedPasword;
+      updateFields.password = hashedPasword;
+    }
+    if (image) {
+      updateFields.image = image; //update image filename
     }
 
-    const updatedUser = await User.findByIdAndUpdate(id, updateFiels, {
+    const updatedUser = await User.findByIdAndUpdate(id, updateFields, {
       new: true,
     });
     if (!updatedUser) {
@@ -133,25 +137,6 @@ export const deleteUserById = async (req, res) => {
       message: "User and associated blogs deleted successfully",
       user: deleteUser,
     });
-  } catch (err) {
-    console.error(err);
-    return res.status(500).json({ message: "Internal server error" });
-  }
-};
-
-export const updateImageById = async (req, res) => {
-  const { id } = req.params;
-  const image = req.file.filename; //get the image name from the request
-  try {
-    const user = await User.findById(id);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-    user.image = image; //update the image name in the database
-    await user.save(); //save the updated user
-    return res
-      .status(200)
-      .json({ message: "Image updated successfully", user });
   } catch (err) {
     console.error(err);
     return res.status(500).json({ message: "Internal server error" });
