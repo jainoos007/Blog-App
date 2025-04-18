@@ -428,9 +428,9 @@ const Dashboard = () => {
               <div className="flex items-center mb-6">
                 {/* Show profile picture in sidebar if available */}
                 <div className="h-10 w-10 rounded-full overflow-hidden bg-[#7c0fb3] flex items-center justify-center text-white font-bold">
-                  {user?.profilePic ? (
+                  {user?.image ? (
                     <img
-                      src={`http://localhost:7000/uploads/${user.profilePic}`}
+                      src={`http://localhost:7000/uploads/${user.image}`}
                       alt="Profile"
                       className="h-full w-full object-cover"
                     />

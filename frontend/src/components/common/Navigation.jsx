@@ -86,7 +86,7 @@ const Navigation = () => {
               <NavLink to="/blogs">Blogs</NavLink>
             </li>
             <li>
-              <NavLink to="/contact">About</NavLink>
+              <NavLink to="/about">About</NavLink>
             </li>
           </ul>
         </div>
@@ -108,8 +108,22 @@ const Navigation = () => {
                 aria-haspopup="true"
                 aria-expanded={showDropdown}
                 aria-controls="user-dropdown"
-                className="flex items-center gap-1 primary transition-all duration-200 ease-in-out font-semibold cursor-pointer hover:text-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 rounded px-2 py-1"
+                className="flex items-center gap-2 primary transition-all duration-200 ease-in-out font-semibold cursor-pointer hover:text-purple-600 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2 rounded px-2 py-1"
               >
+                {/* Profile Picture */}
+                <div className="h-8 w-8 rounded-full overflow-hidden flex items-center justify-center bg-purple-100 border border-purple-300">
+                  {user?.image ? (
+                    <img
+                      src={`http://localhost:7000/uploads/${user.image}`}
+                      alt="Profile"
+                      className="h-full w-full object-cover"
+                    />
+                  ) : (
+                    <span className="text-purple-700 font-medium">
+                      {user?.name?.charAt(0)?.toUpperCase() || "U"}
+                    </span>
+                  )}
+                </div>
                 <span>{user?.name || "User"}</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -140,13 +154,29 @@ const Navigation = () => {
                   aria-labelledby="user-menu-button"
                 >
                   <div className="py-1">
-                    <div className="px-4 py-2 border-b">
-                      <p className="text-sm font-medium text-gray-900">
-                        {user?.name || "User"}
-                      </p>
-                      <p className="text-sm text-gray-500">
-                        {user?.email || "user@example.com"}
-                      </p>
+                    <div className="px-4 py-3 border-b flex items-center gap-3">
+                      {/* Larger Profile Picture in Dropdown */}
+                      <div className="h-10 w-10 rounded-full overflow-hidden flex items-center justify-center bg-purple-100 border border-purple-300">
+                        {user?.image ? (
+                          <img
+                            src={`http://localhost:7000/uploads/${user.image}`}
+                            alt="Profile"
+                            className="h-full w-full object-cover"
+                          />
+                        ) : (
+                          <span className="text-purple-700 font-medium text-lg">
+                            {user?.name?.charAt(0)?.toUpperCase() || "U"}
+                          </span>
+                        )}
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-gray-900">
+                          {user?.name || "User"}
+                        </p>
+                        <p className="text-xs text-gray-500">
+                          {user?.email || "user@example.com"}
+                        </p>
+                      </div>
                     </div>
                     <Link
                       to={`/dashboard/${user?._id || ""}`}

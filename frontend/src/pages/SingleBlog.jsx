@@ -64,9 +64,9 @@ const SingleBlog = () => {
             {/* Author Info - Positioned to overlap the image */}
             <div className="absolute -top-16 left-8 flex items-center gap-4 rounded-xl bg-white p-4 shadow-lg">
               <div className="h-16 w-16 overflow-hidden rounded-full bg-gray-200">
-                {blog.author?.avatar ? (
+                {blog.author?.image ? (
                   <img
-                    src={`http://localhost:7000/uploads/${blog.author.avatar}`}
+                    src={`http://localhost:7000/uploads/${blog.author.image}`}
                     alt={blog.author.name}
                     className="h-full w-full object-cover"
                   />

@@ -43,7 +43,11 @@ const BlogCard = ({ blog }) => {
         <div className="mb-4 flex items-center">
           <div className="mr-3 h-10 w-10 overflow-hidden rounded-full">
             <img
-              src={userPic}
+              src={
+                blog.author?.image
+                  ? `http://localhost:7000/uploads/${blog.author.image}`
+                  : userPic
+              }
               alt="Author"
               className="h-full w-full object-cover"
             />
