@@ -395,26 +395,28 @@ const Dashboard = () => {
     <div>
       <div className="flex min-h-screen bg-gray-100">
         {/* Toggle button for sidebar on mobile */}
-        <button
-          className="md:hidden fixed z-20 top-20 left-4 bg-[#7c0fb3] text-white p-2 rounded-full shadow-lg"
-          onClick={() => setSidebarOpen(!sidebarOpen)}
-          aria-label="Toggle sidebar"
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
+        {!sidebarOpen && (
+          <button
+            className="md:hidden fixed z-20 top-20 left-4 bg-[#7c0fb3] text-white p-2 rounded-full shadow-lg"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            aria-label="Toggle sidebar"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M4 6h16M4 12h16m-7 6h7"
-            />
-          </svg>
-        </button>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16m-7 6h7"
+              />
+            </svg>
+          </button>
+        )}
 
         {/* Vertical Navigation Bar */}
         <div

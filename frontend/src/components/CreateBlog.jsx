@@ -48,7 +48,7 @@ const CreateBlog = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto mt-12 mb-12 px-6 py-10 bg-white shadow-lg rounded-lg">
+    <div className="w-90 sm:lg md:w-xl lg:w-3xl mx-auto mt-12 mb-12 px-6 py-10 bg-white shadow-lg rounded-lg">
       <h2 className="text-4xl font-bold text-center text-[#7c0fb3] mb-8">
         Create a New Blog
       </h2>
