@@ -87,7 +87,7 @@ const UpdateBlog = () => {
   };
 
   return (
-    <div className="container mx-auto mt-10 mb-10 p-8 bg-white shadow-md rounded-lg">
+    <div className="w-90 sm:w-lg md:w-xl lg:w-3xl container mx-auto mt-10 mb-10 p-8 bg-white shadow-md rounded-lg">
       <h2 className="text-3xl font-bold text-center text-[#7c0fb3]">
         Update Blog
       </h2>
