@@ -123,13 +123,13 @@ const AllBlogs = () => {
       )}
 
       {/* Blog grid */}
-      <div className="flex justify-center">
+      <div className="flex justify-center ">
         {loading ? (
           <div className="flex items-center justify-center h-64 w-full">
             <div className="w-12 h-12 border-4 border-[#7c0fb3] border-t-transparent rounded-full animate-spin"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10 w-full max-w-7xl">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
             {filteredBlogs.length > 0 ? (
               filteredBlogs.map((blog) => (
                 <BlogCard key={blog._id} blog={blog} />
