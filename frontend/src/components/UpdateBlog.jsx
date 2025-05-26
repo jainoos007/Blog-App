@@ -71,12 +71,18 @@ const UpdateBlog = () => {
 
   // Handle blog deletion
   const handleDeleteBlog = async () => {
-    try {
-      await axios.delete(`/blog/delete/${blogId}`);
-      toast.success("Blog deleted successfully");
-      navigate("/blogs"); // Redirect to All Blogs page
-    } catch (err) {
-      console.error("Error deleting blog", err);
+    if (
+      window.confirm(
+        "Are you sure you want to delete this blog? This action cannot be undone."
+      )
+    ) {
+      try {
+        await axios.delete(`/blog/delete/${blogId}`);
+        toast.success("Blog deleted successfully");
+        navigate("/blogs"); // Redirect to All Blogs page
+      } catch (err) {
+        console.error("Error deleting blog", err);
+      }
     }
   };
 

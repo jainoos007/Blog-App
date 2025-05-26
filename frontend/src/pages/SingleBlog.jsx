@@ -51,11 +51,13 @@ const SingleBlog = () => {
         <div className="mx-auto max-w-4xl rounded-xl bg-white shadow-xl">
           {/* Header Image */}
           <div className="relative h-80 w-full overflow-hidden rounded-t-xl">
-            <img
-              src={`http://localhost:7000/uploads/${blog.image}`}
-              alt={blog.title}
-              className="h-full w-full object-cover"
-            />
+            {blog.image && (
+              <img
+                src={`http://localhost:7000/uploads/${blog.image}`}
+                alt=""
+                className="h-full w-full object-cover"
+              />
+            )}
             <div className="absolute inset-0 bg-gradient-to-b from-transparent to-black/60"></div>
           </div>
 

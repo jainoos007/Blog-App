@@ -1,3 +1,4 @@
 Todo: create text editor for blog
 add comment feature
-profile pic for user
+make responsive
+creatre saved blogs feature

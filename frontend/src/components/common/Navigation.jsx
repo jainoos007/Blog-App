@@ -69,7 +69,7 @@ const Navigation = () => {
   );
 
   return (
-    <div className="bg-primary drop-shadow-md">
+    <div className="bg-primary drop-shadow-md realative z-20">
       <div className="container flex justify-between items-center py-4">
         <Link
           to="/"
@@ -148,7 +148,7 @@ const Navigation = () => {
               {showDropdown && (
                 <div
                   id="user-dropdown"
-                  className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5"
+                  className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 z-50"
                   role="menu"
                   aria-orientation="vertical"
                   aria-labelledby="user-menu-button"
