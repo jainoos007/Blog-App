@@ -15,7 +15,7 @@ const Hero = () => {
           Stay Curious
         </h1>
         <p className="text-lg lg:text-xl text-center text-[#C1BFFF]">
-          Discover stories, thinking, and expertise from writers on any topic
+          Discover stories, thinking, and expertise from writers on any topics
         </p>
 
         {/* Button */}
